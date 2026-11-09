@@ -1,7 +1,6 @@
 """mlbox status command: display deployed infrastructure and model endpoints."""
 
 from pathlib import Path
-import typer
 from rich.console import Console
 from rich.table import Table
 
@@ -35,4 +34,3 @@ def show_status():
     table.add_row("CI/CD Service Account", outputs.get("cicd_service_account", "Not configured"))
 
     console.print(table)
-

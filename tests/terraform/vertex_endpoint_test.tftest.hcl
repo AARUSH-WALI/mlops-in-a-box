@@ -16,13 +16,7 @@ run "plan_vertex_endpoint" {
   }
 
   assert {
-    condition     = output.endpoint_name == "test-iris-endpoint"
-    error_message = "Endpoint name must match sanitized display name"
-  }
-
-  assert {
     condition     = output.endpoint_network == null
     error_message = "Endpoint network should default to null for public endpoint"
   }
 }
-

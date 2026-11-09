@@ -10,16 +10,12 @@ locals {
     managed_by = "terraform"
     module     = "vertex-endpoint"
   })
-
-  # Sanitize endpoint name to valid GCP format (alphanumeric, hyphens, <= 128 chars)
-  endpoint_name = lower(replace(var.endpoint_display_name, "[^a-zA-Z0-9-]", "-"))
 }
 
 # -----------------------------------------------------------------------------
 # Vertex AI Online Prediction Endpoint
 # -----------------------------------------------------------------------------
 resource "google_vertex_ai_endpoint" "endpoint" {
-  name         = local.endpoint_name
   display_name = var.endpoint_display_name
   project      = var.project_id
   region       = var.region
@@ -53,4 +49,3 @@ resource "google_vertex_ai_model" "model" {
 
   labels = local.common_labels
 }
-
