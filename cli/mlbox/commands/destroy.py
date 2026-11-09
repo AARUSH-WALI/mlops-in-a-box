@@ -41,3 +41,4 @@ def destroy_project(
         raise typer.Exit(code=1)
 
     console.print("[bold green]All resources destroyed. Zero continuing cloud spend.[/bold green]")
+

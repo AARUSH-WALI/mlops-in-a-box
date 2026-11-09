@@ -87,3 +87,4 @@ def check_drift(request):
 
     logger.info(f"Drift check completed: {result['status']}")
     return json.dumps(result), 200, {"Content-Type": "application/json"}
+

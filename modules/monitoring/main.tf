@@ -340,3 +340,4 @@ resource "google_cloud_scheduler_job" "auto_shutdown_schedule" {
     }
   }
 }
+

@@ -73,3 +73,4 @@ module "monitoring" {
 | `error_rate_alert_id` | ID of the error rate alert policy |
 | `drift_check_function_url` | Invocation URL for drift check function |
 | `auto_shutdown_function_url` | Invocation URL for auto-shutdown function |
+

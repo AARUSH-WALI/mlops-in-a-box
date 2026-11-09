@@ -15,3 +15,4 @@ COPY train.py .
 
 # Vertex AI passes training environment variables such as AIP_MODEL_DIR
 ENTRYPOINT ["python", "train.py"]
+

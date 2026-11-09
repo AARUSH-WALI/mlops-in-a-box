@@ -208,3 +208,4 @@ This catalog contains **12 beginner-friendly starter issues** with precise imple
 - **Acceptance Criteria:**
   - [ ] `mlbox cost --region us-central1` and `mlbox cost --region europe-west1` adjust pricing appropriately.
   - [ ] Unit tests verify regional pricing logic.
+

@@ -85,3 +85,4 @@ def test_predict_empty_instances(client):
     response = client.post("/predict", json=payload)
     assert response.status_code == 200
     assert response.json()["predictions"] == []
+

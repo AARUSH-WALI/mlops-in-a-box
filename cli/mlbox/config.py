@@ -39,3 +39,4 @@ def save_config(config: MLBoxConfig, directory: Optional[Path] = None) -> Path:
     path = get_config_path(directory)
     path.write_text(json.dumps(config.model_dump(), indent=2), encoding="utf-8")
     return path
+

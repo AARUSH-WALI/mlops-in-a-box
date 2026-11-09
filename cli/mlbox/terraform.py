@@ -105,3 +105,4 @@ class TerraformRunner:
             return {k: v.get("value", "") for k, v in raw.items()}
         except Exception:
             return {}
+

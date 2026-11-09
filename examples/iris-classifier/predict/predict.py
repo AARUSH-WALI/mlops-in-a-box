@@ -189,3 +189,4 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("AIP_HTTP_PORT", 8080))
     uvicorn.run("predict:app", host="0.0.0.0", port=port, log_level="info")
+

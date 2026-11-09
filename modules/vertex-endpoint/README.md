@@ -51,3 +51,4 @@ module "vertex_endpoint" {
 | `model_id` | The ID of the registered Vertex AI Model |
 | `model_name` | The full resource name of the registered Vertex AI Model |
 | `endpoint_network` | The VPC network attached to the endpoint (if any) |
+

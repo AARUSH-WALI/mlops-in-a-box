@@ -19,3 +19,4 @@ skip-check:
 compact: true
 quiet: false
 soft-fail: false
+

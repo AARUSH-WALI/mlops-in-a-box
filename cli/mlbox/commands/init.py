@@ -60,3 +60,4 @@ def init_project(
 
     console.print("\n[bold green]Workspace ready![/bold green] Next step:")
     console.print("Run [bold cyan]mlbox deploy[/bold cyan] to provision infrastructure & deploy your model.")
+

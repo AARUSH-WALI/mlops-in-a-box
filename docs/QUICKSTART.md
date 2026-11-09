@@ -128,3 +128,4 @@ When you are done testing, cleanly destroy all resources to stop billing:
 mlbox destroy
 ```
 All provisioned infrastructure will be safely removed.
+

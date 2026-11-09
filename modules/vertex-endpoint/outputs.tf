@@ -26,3 +26,4 @@ output "model_name" {
   description = "The resource name of the registered Vertex AI Model."
   value       = google_vertex_ai_model.model.name
 }
+

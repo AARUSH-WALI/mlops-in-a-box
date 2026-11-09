@@ -33,3 +33,4 @@ updates:
     directory: "/modules/vertex-endpoint"
     schedule:
       interval: "monthly"
+

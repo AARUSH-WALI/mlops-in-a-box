@@ -34,3 +34,4 @@ def test_load_config_missing():
     with tempfile.TemporaryDirectory() as tmpdir:
         loaded = load_config(Path(tmpdir))
         assert loaded is None
+

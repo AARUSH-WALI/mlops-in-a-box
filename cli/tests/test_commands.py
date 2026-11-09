@@ -25,3 +25,4 @@ def test_status_command_without_terraform():
     # Should run and display table even without active deployment
     assert result.exit_code == 0
     assert "Deployment Status" in result.output
+

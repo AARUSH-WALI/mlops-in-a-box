@@ -36,3 +36,4 @@ def deploy_project(
     outputs = runner.get_outputs()
     endpoint_id = outputs.get("vertex_endpoint_id", "Provisioned")
     console.print(f"[bold green]Model Endpoint Live![/bold green] Endpoint ID: [cyan]{endpoint_id}[/cyan]")
+

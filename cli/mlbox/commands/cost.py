@@ -64,3 +64,4 @@ def estimate_costs():
             border_style="green",
         )
     )
+

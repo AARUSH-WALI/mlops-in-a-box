@@ -23,3 +23,4 @@ run "plan_registry" {
     error_message = "Docker registry URL constructed incorrectly"
   }
 }
+

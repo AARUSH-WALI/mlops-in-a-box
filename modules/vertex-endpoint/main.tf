@@ -53,3 +53,4 @@ resource "google_vertex_ai_model" "model" {
 
   labels = local.common_labels
 }
+

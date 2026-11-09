@@ -101,3 +101,4 @@ def auto_shutdown_check(request):
         "requests_last_window": request_count,
         "action": action_taken,
     }), 200, {"Content-Type": "application/json"}
+

@@ -91,3 +91,4 @@ jobs:
           gcloud ai endpoints predict "${{ inputs.endpoint_id }}" \
             --region="${{ inputs.region }}" \
             --json-request=/tmp/test_probe.json
+

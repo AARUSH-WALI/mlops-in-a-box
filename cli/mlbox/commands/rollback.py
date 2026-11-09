@@ -36,3 +36,4 @@ def rollback_model(
         raise typer.Exit(code=1)
 
     console.print("[bold green]Rollback completed successfully![/bold green] Traffic shifted to previous model.")
+

@@ -103,3 +103,4 @@ The prediction container exposes standard Vertex AI HTTP routes:
   }
   ```
   and returning class predictions with probability distributions.
+

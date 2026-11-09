@@ -25,3 +25,4 @@ run "plan_vertex_endpoint" {
     error_message = "Endpoint network should default to null for public endpoint"
   }
 }
+

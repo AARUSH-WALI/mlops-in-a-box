@@ -51,3 +51,4 @@ output "cicd_service_account" {
   description = "Email of the CI/CD Service Account used by GitHub Actions."
   value       = module.iam.cicd_sa_email
 }
+

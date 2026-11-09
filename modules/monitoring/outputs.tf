@@ -31,3 +31,4 @@ output "auto_shutdown_function_url" {
   description = "The HTTP invocation URL of the auto-shutdown Cloud Function, if enabled."
   value       = var.enable_auto_shutdown && length(google_cloudfunctions2_function.auto_shutdown) > 0 ? google_cloudfunctions2_function.auto_shutdown[0].url : null
 }
+

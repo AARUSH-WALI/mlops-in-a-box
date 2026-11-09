@@ -56,3 +56,4 @@ If you don't wish to incur any cloud charges:
    uvicorn predict:app --port 8080
    ```
 2. Unit tests and CI pipelines run entirely within GitHub Actions' free tier runners.
+

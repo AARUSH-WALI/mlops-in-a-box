@@ -56,3 +56,4 @@ def test_parse_args_defaults():
     assert args.n_estimators == 100
     assert args.max_depth == 4
     assert args.random_state == 42
+
