@@ -33,4 +33,3 @@ def test_init_command_creates_files():
             content = Path("terraform.tfvars").read_text(encoding="utf-8")
             assert 'project_id  = "my-test-project"' in content
             assert 'region      = "us-central1"' in content
-

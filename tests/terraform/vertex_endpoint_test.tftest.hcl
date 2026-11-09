@@ -4,8 +4,6 @@ variables {
   project_id            = "test-mlops-project-12345"
   region                = "us-central1"
   endpoint_display_name = "test-iris-endpoint"
-  model_display_name    = "test-iris-model"
-  container_image_uri   = "us-central1-docker.pkg.dev/test-mlops-project-12345/mlops-containers/iris-classifier:latest"
 }
 
 run "plan_vertex_endpoint" {

@@ -99,27 +99,17 @@ module "storage" {
 }
 
 # -----------------------------------------------------------------------------
-# 6. ML Platform: Vertex AI Endpoint & Model Registration
+# 6. ML Platform: Vertex AI Endpoint
 # -----------------------------------------------------------------------------
-locals {
-  serving_image_uri = "${module.registry.registry_url}/iris-predictor:${var.container_image_tag}"
-}
-
 module "vertex_endpoint" {
   source = "../../modules/vertex-endpoint"
 
   project_id            = var.project_id
   region                = var.region
   endpoint_display_name = "${var.name_prefix}-endpoint"
-  model_display_name    = "${var.name_prefix}-iris-model"
-  model_description     = "Iris Classifier RandomForest model deployed via MLOps-in-a-Box"
-  container_image_uri   = local.serving_image_uri
-  artifact_uri          = "${module.storage.models_bucket_url}/iris"
-  predict_route         = "/predict"
-  health_route          = "/health"
   labels                = var.labels
 
-  depends_on = [module.bootstrap, module.registry, module.storage]
+  depends_on = [module.bootstrap, module.network]
 }
 
 # -----------------------------------------------------------------------------
