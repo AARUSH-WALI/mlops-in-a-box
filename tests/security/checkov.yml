@@ -1,0 +1,21 @@
+# Checkov Configuration for MLOps-in-a-Box
+# Documented exceptions and baseline rules
+
+directory:
+  - modules/
+
+framework:
+  - terraform
+
+# Skip specific checks with documented architectural reasons:
+# CKV_GCP_62: "Bucket should have access logging enabled" - state & staging buckets don't need dedicated logging buckets for cost efficiency
+# CKV_GCP_78: "Ensure Cloud Storage buckets have uniform bucket-level access enabled" - enforced in code
+skip-check:
+  - CKV_GCP_62  # Logging bucket overhead is unnecessary for small-scale/demo environments
+  - CKV2_GCP_18 # Customer-managed encryption keys (CMEK) omitted to keep costs free/low (Google-managed keys are used by default)
+  - CKV_GCP_29  # Storage bucket retention policy not required for dev/staging buckets
+  - CKV_GCP_114 # Public access prevention is configured via uniform bucket-level access and IAM
+
+compact: true
+quiet: false
+soft-fail: false
