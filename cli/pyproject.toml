@@ -12,7 +12,7 @@ license = { text = "MIT" }
 authors = [{ name = "Aarush Wali" }]
 dependencies = [
     "typer>=0.9.0",
-    "rich>=13.7.0",
+    "rich>=15.0.0",
     "pydantic>=2.6.0",
 ]
 
