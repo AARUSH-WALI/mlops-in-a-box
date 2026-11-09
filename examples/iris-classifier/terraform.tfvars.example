@@ -1,0 +1,20 @@
+# Configuration variables for the Iris Classifier Example
+# Copy this file to terraform.tfvars and fill in your values
+
+project_id  = "my-gcp-project-id"
+region      = "us-central1"
+name_prefix = "iris-mlbox"
+environment = "dev"
+
+# GitHub settings for keyless Workload Identity Federation
+github_org  = "my-github-username-or-org"
+github_repo = "mlops-in-a-box"
+
+# Model container image settings
+container_image_tag = "latest"
+
+# Optional budget alert guardrail
+enable_budget      = false
+billing_account    = "012345-6789AB-CDEF01"
+alert_email        = "alerts@example.com"
+monthly_budget_usd = 100
