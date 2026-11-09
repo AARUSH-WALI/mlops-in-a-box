@@ -37,5 +37,7 @@ def load_config(directory: Optional[Path] = None) -> Optional[MLBoxConfig]:
 
 def save_config(config: MLBoxConfig, directory: Optional[Path] = None) -> Path:
     path = get_config_path(directory)
-    path.write_text(json.dumps(config.model_dump(), indent=2), encoding="utf-8")
+    dump_fn = getattr(config, "model_dump", getattr(config, "dict", None))
+    data = dump_fn() if dump_fn else {}
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
     return path

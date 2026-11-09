@@ -17,12 +17,7 @@ def init_project(
     template: str = typer.Option("iris-classifier", "--template", "-t", help="ML Template"),
     github_org: str = typer.Option("", "--github-org", help="GitHub username/organization"),
     github_repo: str = typer.Option("mlops-in-a-box", "--github-repo", help="GitHub repository name"),
-    run_tf_init: bool = typer.Option(
-        True,
-        "--init-terraform/--no-init-terraform",
-        "--run-tf-init/--no-run-tf-init",
-        help="Run terraform init",
-    ),
+    run_tf_init: bool = typer.Option(False, "--init-terraform", help="Run terraform init after scaffold"),
 ):
     """Initializes a new MLOps-in-a-Box project workspace."""
     console.print(

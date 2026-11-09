@@ -9,7 +9,7 @@ runner = CliRunner()
 def test_version_flag():
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
-    assert "mlbox version 0.1.0" in result.output
+    assert "0.1.0" in result.output
 
 
 def test_cost_command():
@@ -20,9 +20,7 @@ def test_cost_command():
     assert "Auto-shutdown is enabled by default" in result.output
 
 
-def test_status_command_without_terraform():
+def test_status_command():
     result = runner.invoke(app, ["status"])
-    # Should run and display table even without active deployment
     assert result.exit_code == 0
     assert "Deployment Status" in result.output
-

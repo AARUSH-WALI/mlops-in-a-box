@@ -20,7 +20,6 @@ def test_init_command_creates_files():
                     "my-test-project",
                     "--region",
                     "us-central1",
-                    "--no-init-terraform",
                 ],
             )
             assert result.exit_code == 0
