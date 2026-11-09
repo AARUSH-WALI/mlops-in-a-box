@@ -1,0 +1,45 @@
+name: 🐛 Bug Report
+description: File a bug report to help us fix an issue
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much detail as possible.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: What steps did you run?
+      placeholder: |
+        1. Run 'mlbox init'
+        2. Set variables...
+        3. Run 'mlbox deploy'
+        4. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Info
+      description: Please share your environment details.
+      placeholder: |
+        - OS: [e.g. Ubuntu 22.04 / macOS Sonoma / Windows 11]
+        - Terraform Version: [e.g. 1.6.5]
+        - Python Version: [e.g. 3.11.2]
+        - gcloud Version: [e.g. 450.0.0]
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Paste any relevant command line or CI logs here.
+      render: shell

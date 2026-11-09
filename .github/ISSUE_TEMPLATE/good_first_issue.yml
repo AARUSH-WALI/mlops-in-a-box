@@ -1,0 +1,52 @@
+name: 🌱 Good First Issue Proposal
+description: Propose a beginner-friendly starter issue with structured guidance
+labels: ["good first issue", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good first issues help newcomers contribute confidently. Please ensure precise steps and acceptance criteria.
+  - type: input
+    id: title
+    attributes:
+      label: Task Summary
+      placeholder: "e.g. Add Slack webhook alert integration to budget module"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Why is this needed?
+    validations:
+      required: true
+  - type: textarea
+    id: files_to_touch
+    attributes:
+      label: Files to Touch
+      description: List specific files and directories that will be modified or created.
+      placeholder: |
+        - `modules/budget/main.tf`
+        - `modules/budget/variables.tf`
+        - `docs/COST_ESTIMATE.md`
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Step-by-Step Implementation Guide
+      description: Clear, sequential instructions for the contributor.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Checklist of requirements for this PR to be merged.
+      placeholder: |
+        - [ ] Feature works as described
+        - [ ] Terraform formatting and validation passes
+        - [ ] Tests added/updated
+        - [ ] Docs updated
+    validations:
+      required: true
