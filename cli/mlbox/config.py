@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Optional
 from pydantic import BaseModel, Field
 
 CONFIG_FILE_NAME = ".mlbox.json"
@@ -39,4 +39,3 @@ def save_config(config: MLBoxConfig, directory: Optional[Path] = None) -> Path:
     path = get_config_path(directory)
     path.write_text(json.dumps(config.model_dump(), indent=2), encoding="utf-8")
     return path
-

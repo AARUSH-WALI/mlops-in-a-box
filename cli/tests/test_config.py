@@ -2,9 +2,8 @@
 
 from pathlib import Path
 import tempfile
-import pytest
 
-from mlbox.config import MLBoxConfig, get_config_path, load_config, save_config
+from mlbox.config import MLBoxConfig, load_config, save_config
 
 
 def test_save_and_load_config():
@@ -34,4 +33,3 @@ def test_load_config_missing():
     with tempfile.TemporaryDirectory() as tmpdir:
         loaded = load_config(Path(tmpdir))
         assert loaded is None
-

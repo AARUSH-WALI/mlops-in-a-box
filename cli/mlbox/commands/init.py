@@ -1,7 +1,6 @@
 """mlbox init command: bootstrap a new project from templates."""
 
 from pathlib import Path
-from typing import Optional
 import typer
 from rich.console import Console
 from rich.panel import Panel
@@ -38,7 +37,7 @@ def init_project(
         github_repo=github_repo,
     )
     save_config(config, cwd)
-    console.print(f"[green]Saved configuration to [bold].mlbox.json[/bold][/green]")
+    console.print("[green]Saved configuration to [bold].mlbox.json[/bold][/green]")
 
     # Create local terraform.tfvars if it does not exist
     tfvars_file = cwd / "terraform.tfvars"
@@ -51,7 +50,7 @@ def init_project(
             f'github_repo = "{github_repo}"\n'
         )
         tfvars_file.write_text(content, encoding="utf-8")
-        console.print(f"[green]Created [bold]terraform.tfvars[/bold][/green]")
+        console.print("[green]Created [bold]terraform.tfvars[/bold][/green]")
 
     if run_tf_init:
         runner = TerraformRunner(cwd)
@@ -60,4 +59,3 @@ def init_project(
 
     console.print("\n[bold green]Workspace ready![/bold green] Next step:")
     console.print("Run [bold cyan]mlbox deploy[/bold cyan] to provision infrastructure & deploy your model.")
-

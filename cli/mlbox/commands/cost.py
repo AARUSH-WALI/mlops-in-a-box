@@ -1,7 +1,5 @@
 """mlbox cost command: estimates ongoing cloud spend and cost breakdown."""
 
-from pathlib import Path
-import typer
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -64,4 +62,3 @@ def estimate_costs():
             border_style="green",
         )
     )
-

@@ -1,10 +1,8 @@
 """mlbox rollback command: reverts prediction traffic to a previous model."""
 
-from pathlib import Path
 import typer
 from rich.console import Console
 
-from mlbox.config import load_config
 from mlbox.terraform import run_command
 
 console = Console()
@@ -36,4 +34,3 @@ def rollback_model(
         raise typer.Exit(code=1)
 
     console.print("[bold green]Rollback completed successfully![/bold green] Traffic shifted to previous model.")
-
