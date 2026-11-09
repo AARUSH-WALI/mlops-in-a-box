@@ -1,0 +1,93 @@
+name: Rollback Model Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: "GCP Project ID"
+        required: true
+        type: string
+      region:
+        description: "GCP Region"
+        required: false
+        default: "us-central1"
+        type: string
+      endpoint_id:
+        description: "Vertex AI Endpoint ID"
+        required: true
+        type: string
+      target_deployed_model_id:
+        description: "Deployed Model ID to restore 100% traffic to"
+        required: true
+        type: string
+      undeploy_current_model_id:
+        description: "Optional Deployed Model ID to undeploy after shifting traffic"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  rollback:
+    name: Execute Model Rollback
+    runs-on: ubuntu-latest
+    env:
+      WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER }}
+      WIF_SERVICE_ACCOUNT: ${{ secrets.GCP_CI_SA_EMAIL }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via WIF
+        if: env.WIF_PROVIDER != '' && env.WIF_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.WIF_SERVICE_ACCOUNT }}
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ inputs.project_id }}
+
+      - name: Shift 100% Traffic to Target Model
+        run: |
+          echo "Shifting 100% traffic to deployed model ${{ inputs.target_deployed_model_id }}..."
+
+          # Traffic split syntax in gcloud is <deployed-model-id>=<percentage>
+          gcloud ai endpoints set-traffic-split "${{ inputs.endpoint_id }}" \
+            --region="${{ inputs.region }}" \
+            --traffic-split="${{ inputs.target_deployed_model_id }}=100"
+
+          echo "Traffic shift completed."
+
+      - name: Undeploy Problematic Model Version (if specified)
+        if: inputs.undeploy_current_model_id != ''
+        run: |
+          echo "Undeploying model ${{ inputs.undeploy_current_model_id }}..."
+
+          gcloud ai endpoints undeploy-model "${{ inputs.endpoint_id }}" \
+            --region="${{ inputs.region }}" \
+            --deployed-model-id="${{ inputs.undeploy_current_model_id }}" \
+            --quiet
+
+          echo "Model undeployed cleanly."
+
+      - name: Verify Rollback Health Check
+        run: |
+          cat << 'EOF' > /tmp/test_probe.json
+          {
+            "instances": [
+              [5.1, 3.5, 1.4, 0.2]
+            ]
+          }
+          EOF
+
+          echo "Verifying endpoint inference after rollback..."
+          gcloud ai endpoints predict "${{ inputs.endpoint_id }}" \
+            --region="${{ inputs.region }}" \
+            --json-request=/tmp/test_probe.json

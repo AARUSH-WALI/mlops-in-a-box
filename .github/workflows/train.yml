@@ -1,0 +1,95 @@
+name: Train Model
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_id:
+        description: "GCP Project ID"
+        required: true
+        type: string
+      region:
+        description: "GCP Region"
+        required: false
+        default: "us-central1"
+        type: string
+      n_estimators:
+        description: "Number of trees (Random Forest)"
+        required: false
+        default: "100"
+        type: string
+  push:
+    branches: [main]
+    paths:
+      - "examples/iris-classifier/train/**"
+
+permissions:
+  contents: read
+  id-token: write # Required for Workload Identity Federation
+
+jobs:
+  test-and-train:
+    name: Test & Train Model
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ inputs.project_id || vars.GCP_PROJECT_ID }}
+      REGION: ${{ inputs.region || vars.GCP_REGION || 'us-central1' }}
+      WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER }}
+      WIF_SERVICE_ACCOUNT: ${{ secrets.GCP_CI_SA_EMAIL }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r examples/iris-classifier/train/requirements.txt
+          pip install pytest
+
+      - name: Run Training Unit Tests
+        run: |
+          pytest examples/iris-classifier/tests/test_train.py -v --tb=short
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        if: env.WIF_PROVIDER != '' && env.WIF_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WIF_PROVIDER }}
+          service_account: ${{ env.WIF_SERVICE_ACCOUNT }}
+
+      - name: Setup Google Cloud SDK
+        if: env.WIF_PROVIDER != ''
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Configure Docker for Artifact Registry
+        if: env.WIF_PROVIDER != ''
+        run: |
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build & Push Training Container
+        if: env.WIF_PROVIDER != ''
+        run: |
+          IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/iris-mlbox-containers/iris-trainer:${{ github.sha }}"
+          docker build -t "$IMAGE_URI" examples/iris-classifier/train/
+          docker push "$IMAGE_URI"
+          echo "Training container published to $IMAGE_URI"
+
+      - name: Submit Vertex AI Custom Training Job
+        if: env.WIF_PROVIDER != ''
+        run: |
+          IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/iris-mlbox-containers/iris-trainer:${{ github.sha }}"
+          STAGING_BUCKET="gs://${{ env.PROJECT_ID }}-iris-mlbox-staging-dev"
+          MODEL_DIR="gs://${{ env.PROJECT_ID }}-iris-mlbox-models-dev/iris/${{ github.sha }}"
+
+          gcloud ai custom-jobs create \
+            --region="${{ env.REGION }}" \
+            --display-name="iris-training-${{ github.sha }}" \
+            --worker-pool-spec="machine-type=n1-standard-4,container-image-uri=$IMAGE_URI" \
+            --args="--output-dir=$MODEL_DIR,--n-estimators=${{ inputs.n_estimators || '100' }}"
